@@ -15,6 +15,7 @@
 #' @import dplyr
 #' @import tidyr
 #' @import readr
+#' @import tidyfast
 #' @importFrom magrittr `%>%`
 #'
 #' @return
@@ -30,13 +31,16 @@ q2c <- function (data,
                  covariates,
                  type = "choice") {
 
-  ID <- Task <- Profile <- Attr <- Levels<- Prefix <- Attr_D <- NULL
+  ID <- Task <- Profile <- Full_Attr <- Attr <- Levels<- Prefix <- Attr_D <- NULL
   Outcome <- NULL
 
+  # Qualtricsからexportしたファイルの場合、2、3行目は不要なので
+  # 2、3行目を除いて読み込む
   if (is.character(data)) {
-    col_names <- names(read_csv(data, show_col_types = FALSE))
-    data <- read_csv(data, skip = 2, show_col_types = FALSE)
-    names(data) <- col_names
+    col_names <- read_csv(data, show_col_types = FALSE, n_max = 0) %>%
+      names()
+    data <- read_csv(data, skip = 3, show_col_types = FALSE,
+                     col_names = col_names)
   }
 
   temp_data <- data %>%
@@ -80,15 +84,17 @@ q2c <- function (data,
 
   temp_cj <- temp_cj %>%
     pivot_longer(cols      = -ID,
-                 names_to  = "Attr",
+                 names_to  = "Full_Attr",
                  values_to = "Levels") %>%
-    separate(col = Attr,
-             into = c("Prefix", "Task", "Profile", "Attr"),
-             sep = "-",
-             fill = "right",
-             convert = TRUE) %>%
-    select(-Prefix) %>%
-    mutate(Attr_D  = ifelse(is.na(Attr), TRUE, FALSE),
+    dt_separate(col = Full_Attr,
+                into = c("Prefix", "Task", "Profile", "Attr"),
+                sep = "-",
+                fill = NA,
+                remove = FALSE) %>%
+    as_tibble() %>%
+    select(-Prefix, -Full_Attr) %>%
+    mutate(across(Task:Attr, as.numeric),
+           Attr_D  = ifelse(is.na(Attr), TRUE, FALSE),
            Attr    = ifelse(Attr_D, Profile, Attr),
            Profile = ifelse(Attr_D, 0, Profile)) %>%
     arrange(ID, Task, Attr, Profile) %>%
