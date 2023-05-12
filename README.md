@@ -1,4 +1,4 @@
-# q2c
+# q2c 0.2.0
 {q2c}: Qualtrics to Conjoint
 
 ※ **注意:** 1-2年前の書きかけのものがあったので、少しだけ修正し、とりあえずアップロードしたものです。今後、（時間があれば）普通に使えるようにします。今でも使う分には問題ないと思いますが...
@@ -9,12 +9,29 @@
 remotes::install_github("JaehyunSong/q2c")
 # または
 devtools::install_github("JaehyunSong/q2c")
+# または
+pacman::p_install_gh("JaehyunSong/q2c")
 ```
 
 ## 使い方
 
 * (臨時) サンプルデータのURL
    * <https://www.jaysong.net/software/Data/q2c_sample.csv>
+
+```r
+q2c(data, prefix = "F", id, outcome, covariates, type = "choice")
+```
+
+**引数**
+
+* `data`: 読み込み済みのデータフレーム、またはデータ（`.csv`形式）のパス
+* `prefix`: 属性と水準列名の接頭詞（既定値は"F"）
+* `id`: 回答者のIDが格納されている列名
+* `outcome`: 応答変数の列名で構成されたCharacter型ベクトル
+* `covariates`: 共変量の列名で構成されたCharacter型ベクトル
+* `type`: 応答変数のタイプ (`"choice"` (既定値), `"rating"`, or `"rank"`)
+
+## 例
 
 ### 応答変数が「選択」の場合
 

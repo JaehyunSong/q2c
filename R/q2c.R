@@ -1,4 +1,4 @@
-#' Qualtrics to Wide Data Conjoint
+#' Qualtrics (wide) to Conjoint (long)
 #'
 #' @param data 読み込み済みのデータフレーム、またはデータのパス
 #' @param prefix 属性と水準列名の接頭詞（既定値は\code{"F"}）
