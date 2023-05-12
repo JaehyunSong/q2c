@@ -2,28 +2,28 @@
 % Please edit documentation in R/q2c.R
 \name{q2c}
 \alias{q2c}
-\title{Qualtrics to Wide Data Conjoint}
+\title{Qualtrics (wide) to Conjoint (long)}
 \usage{
 q2c(data, prefix = "F", id, outcome, covariates, type = "choice")
 }
 \arguments{
-\item{data}{読み込み済みのデータフレーム、またはデータのパス}
+\item{data}{a \code{data.frame} object, \code{tibble} object, file path (\code{.csv}) or url (\code{.csv})}
 
-\item{prefix}{属性と水準列名の接頭詞（既定値は\code{"F"}）}
+\item{prefix}{a prefix of attributes and levels (default is \code{"F"})}
 
-\item{id}{回答者のID}
+\item{id}{Respondents' ID}
 
-\item{outcome}{応答変数}
+\item{outcome}{a vector of outcome variables.}
 
-\item{covariates}{共変量}
+\item{covariates}{a vector of covariates.}
 
-\item{type}{応答変数のタイプ (\code{"choice"} (default), \code{"rating"}, or \code{"rank"})}
+\item{type}{type of outcome variable (\code{"choice"} (default), \code{"rating"}, or \code{"rank"})}
 }
 \value{
 A \code{tibble} object.
 }
 \description{
-Qualtrics to Wide Data Conjoint
+Qualtrics (wide) to Conjoint (long)
 }
 \details{
 \describe{

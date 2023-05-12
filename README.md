@@ -107,3 +107,27 @@ q2c::q2c("q2c_sample.csv",
 ### 応答変数が「順位」の場合
 
 * 「評価」と同じ。`type = "rank"`を指定（実は`"rating"`のままでも良い）
+
+## {cjoint}の`read.qualtrics()`との比較
+
+```
+> system.time(
++   q2c::q2c("https://www.jaysong.net/software/Data/q2c_sample.csv", 
++            id = ResponseId,
++            outcome = c(C1_1, C2_1, C3_1),
++            covariates = F1:F6)
++ )
+   user  system elapsed       
+  0.136   0.027   0.488 
+  
+> system.time(
++   cjoint::read.qualtrics("https://www.jaysong.net/software/Data/q2c_sample.csv",
++                          respondentID = "ResponseId",
++                          responses = c("C1_1", "C2_1", "C3_1"),
++                          covariates = c("F1", "F2", "F3", "F4", "F5", "F6"),
++                          new.format = TRUE)
++ )
+[1] "New qualtrics format detected."
+   user  system elapsed 
+  0.425   0.037   0.637 
+```
