@@ -16,6 +16,7 @@
 #' @import tidyr
 #' @import readr
 #' @import tidyfast
+#' @import stringr
 #'
 #' @return
 #' A \code{tibble} object.
@@ -57,7 +58,7 @@ q2c <- function (data,
     select(ID = {{ id }}, {{ covariates }})
 
   if (type %in% c("rating", "rank")) {
-    n_task    <- (ncol(temp_out) - 1) / 2
+    n_task    <- max(as.numeric(str_extract(names(temp_cj)[-1], "([0-9]+)")))
     n_profile <- ncol(temp_out) / n_task
     names(temp_out)[-1] <- paste(rep(paste0("Out", 1:n_task), each = n_profile),
                                  rep(1:n_profile), sep = "_")

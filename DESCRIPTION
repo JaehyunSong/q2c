@@ -1,11 +1,11 @@
 Package: q2c
 Type: Package
 Title: Qualtrics to Conjoint
-Version: 0.2.0
+Version: 0.2.1
 Author: Jaehyun Song
 Maintainer: Jaehyun Song <song@kansai-u.ac.jp>
 Description: Qualtrics (with Conjoint survey design tool) to Conjoint (for {cjoint} or {cregg}).
-Depends: dplyr, tidyr, readr, magrittr, tidyfast
+Depends: dplyr, tidyr, readr, tidyfast, stringr
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

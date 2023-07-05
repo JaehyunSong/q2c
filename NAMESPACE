@@ -3,5 +3,6 @@
 export(q2c)
 import(dplyr)
 import(readr)
+import(stringr)
 import(tidyfast)
 import(tidyr)
